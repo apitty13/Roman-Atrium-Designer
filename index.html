@@ -20,11 +20,11 @@
     background:var(--paper);
   }
   header{
-    padding:18px 22px 12px;
+    padding:14px 22px 8px;
     background:var(--ink);
     color:white;
   }
-  header h1{margin:0 0 5px;font-size:clamp(22px,3vw,34px)}
+  header h1{margin:0;font-size:clamp(22px,3vw,34px)}
   header p{margin:0;opacity:.88}
   .app{
     display:grid;
@@ -93,6 +93,8 @@
     font-size:14px;
   }
   .label:active{cursor:grabbing}
+  .label:hover{background:#f7f2e8;border-color:#9b2d30;}
+  .label-tooltip{position:fixed;z-index:20;display:none;max-width:300px;padding:8px 10px;background:#252525;color:#fff;border-radius:7px;font-size:12px;line-height:1.35;pointer-events:none;box-shadow:0 3px 12px rgba(0,0,0,.25);}
   .legend{display:grid;gap:7px;font-size:13px}
   .legend span{display:flex;align-items:center;gap:8px}
   /* Legend symbols intentionally mirror the shapes/colors used by the canvas layout. */
@@ -175,7 +177,72 @@
     border-radius:9px;
     font-size:13px;
   }
-  .checklist{margin:0;padding-left:19px;font-size:13px;line-height:1.55}
+  .assignment-checklist{
+    margin:6px auto 0;
+    max-width:1180px;
+    padding:8px 18px 10px;
+    background:#fffdf8;
+    color:var(--ink);
+    border-top:1px solid #d5ccbe;
+    border-bottom:1px solid #d5ccbe;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .assignment-checklist h2{
+    margin:0 0 4px;
+    font-size:15px;
+  }
+  .assignment-checklist .intro{
+    margin:0 0 5px;
+    font-size:13px;
+    line-height:1.45;
+  }
+  .checklist{
+    margin:0;
+    padding-left:0;
+    list-style:none;
+    font-size:13px;
+    line-height:1.45;
+    display:grid;
+    gap:4px;
+  }
+  .check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:7px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .check-item input{
+    margin-top:3px;
+    accent-color:#5b4938;
+    cursor:pointer;
+    flex:0 0 auto;
+  }
+  .check-item .check-text{cursor:pointer;}
+  .check-item input:checked + .check-text{
+    text-decoration:line-through;
+    text-decoration-thickness:2px;
+    opacity:.58;
+  }
+  .label-checks{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px 12px;
+    margin:3px 0 4px 24px;
+  }
+  .label-check{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .label-check input{margin:0;accent-color:#5b4938;cursor:pointer;}
+  .label-check input:checked + span{
+    text-decoration:line-through;
+    text-decoration-thickness:2px;
+    opacity:.58;
+  }
   .small{font-size:12px;color:#6b655d}
   kbd{
     border:1px solid #c9c0b4;
@@ -196,7 +263,26 @@
 <body>
 <header>
   <h1>Roman Atrium House Designer</h1>
-  <p>Build a simple Roman domus on the plan: add walls, columns, water, and room labels.</p>
+  <div class="assignment-checklist" aria-label="Assignment Checklist">
+    <h2>Assignment Checklist</h2>
+    <div class="intro"><b>Your Atrium-Style house must have at least one of the following and be labeled correctly:</b></div>
+    <div class="label-checks">
+      <label class="label-check"><input type="checkbox"><span>faucēs</span></label>
+      <label class="label-check"><input type="checkbox"><span>taberna</span></label>
+      <label class="label-check"><input type="checkbox"><span>cubiculum</span></label>
+      <label class="label-check"><input type="checkbox"><span>peristylum</span></label>
+      <label class="label-check"><input type="checkbox"><span>trīclīnium</span></label>
+      <label class="label-check"><input type="checkbox"><span>ātrium</span></label>
+      <label class="label-check"><input type="checkbox"><span>hortus</span></label>
+      <label class="label-check"><input type="checkbox"><span>impluvium</span></label>
+      <label class="label-check"><input type="checkbox"><span>tablīnum</span></label>
+    </div>
+    <ul class="checklist">
+      <li><label class="check-item"><input type="checkbox"><span class="check-text">For the triclinium, Roman Atrium-Style houses had one that opened along the peristyle. Make sure at least one is present on the peristyle.</span></label></li>
+      <li><label class="check-item"><input type="checkbox"><span class="check-text">A Roman entering through the fauces should be able to see from the entrance through the atrium, tablinum, and to the peristyle. The view should not be blocked by any walls, but columns are fine.</span></label></li>
+      <li><label class="check-item"><input type="checkbox"><span class="check-text">Make sure the rooms are in scale with one another. Cubicula and tabernae should be small, and the atrium and peristyle large. Make sure to use all the space available.</span></label></li>
+    </ul>
+  </div>
 </header>
 
 <div class="app">
@@ -253,33 +339,19 @@
     <div class="panel">
       <h2>Room Labels — drag onto the plan</h2>
       <div class="labels" id="labelTray">
-        <div class="label" draggable="true" data-label="faucēs">faucēs</div>
-        <div class="label" draggable="true" data-label="taberna">taberna</div>
-        <div class="label" draggable="true" data-label="cubiculum">cubiculum</div>
-        <div class="label" draggable="true" data-label="peristylum">peristylum</div>
-        <div class="label" draggable="true" data-label="trīclīnium">trīclīnium</div>
-        <div class="label" draggable="true" data-label="ātrium">ātrium</div>
-        <div class="label" draggable="true" data-label="āla">āla</div>
-        <div class="label" draggable="true" data-label="slave quarters">slave quarters</div>
-        <div class="label" draggable="true" data-label="hortus">hortus</div>
-        <div class="label" draggable="true" data-label="impluvium">impluvium</div>
-        <div class="label" draggable="true" data-label="tablīnum">tablīnum</div>
+        <div class="label" draggable="true" data-label="faucēs" title="entrance">faucēs</div>
+        <div class="label" draggable="true" data-label="taberna" title="shops located along the street">taberna</div>
+        <div class="label" draggable="true" data-label="cubiculum" title="bedrooms that were located along the atrium and the peristyle">cubiculum</div>
+        <div class="label" draggable="true" data-label="peristylum" title="The peristyle which was a walkway surrounded by columns">peristylum</div>
+        <div class="label" draggable="true" data-label="trīclīnium" title="dining room with three couches">trīclīnium</div>
+        <div class="label" draggable="true" data-label="ātrium" title="entrance hall where guests were received">ātrium</div>
+        <div class="label" draggable="true" data-label="hortus" title="the garden that was surrounded by the peristyle">hortus</div>
+        <div class="label" draggable="true" data-label="impluvium" title="pool of water in the middle of the atrium with a hole in the roof above it to collect rainwater.">impluvium</div>
+        <div class="label" draggable="true" data-label="tablīnum" title="The study and where the owner met with guests">tablīnum</div>
       </div>
       <p class="hint">You can move a placed label with <b>Select</b>. Double-click a label to remove it.</p>
     </div>
 
-    <div class="panel">
-      <h2>Assignment Checklist</h2>
-      <ul class="checklist">
-        <li>Your Atrium-Style house must have at least one of the following and be labeled correctly:<br>
-          faucēs, taberna, cubiculum, peristylum, trīclīnium, ātrium, āla, slave quarters, hortus, impluvium, tablīnum
-        </li>
-        <li>For the triclinium, Roman Atrium-Style houses had one that opened along the peristyle. Make sure at least one is present on the peristyle.</li>
-        <li>A Roman entering through the fauces should be able to see from the entrance through the atrium, tablinum, and to the peristyle. The view should not be blocked by any walls, but columns are fine.</li>
-        <li>The slave quarters should be hidden and only reached by one door.</li>
-        <li>Make sure the rooms are in scale with one another. Cubicula and tabernae should be small, and the atrium and peristyle large. Make sure to use all the space available.</li>
-      </ul>
-    </div>
     </div>
   </aside>
 
@@ -304,17 +376,13 @@
   const W = canvas.width, H = canvas.height;
 
   // Exact geometry of the supplied Roman House Layout spreadsheet.
-  // All editable cells are rendered as true squares. The coordinate grid starts
-  // at column D / row 4 so the stepped left and lower boundaries line up exactly.
+  // The workbook uses a complete 20 x 20 grid: C4:V23.
+  // Every cell is editable and all cells are rendered as true squares.
   const CELL = 62;
   const X0 = 185; // left edge of column D
   const Y0 = 258; // top edge of row 4
   const xLines = Array.from({length:21}, (_,i)=>X0+i*CELL); // D:X boundaries
   const yLines = Array.from({length:21}, (_,i)=>Y0+i*CELL); // 4:24 boundaries
-
-  // The raised six-cell section is R4:W4. Its objects use local ix 0..5.
-  const topRightX = xLines.slice(14); // R..X boundaries
-  const topRightY = [Y0, Y0+CELL];
 
   // Every structural/grid line in the spreadsheet is on one of these cell
   // boundaries, so snapping to the regular grid is sufficient.
@@ -323,95 +391,13 @@
 
   // Border styles copied from the workbook's D4:W23 cell borders.
   // Each character is one cell side: t=thick, d=dotted, .=none.
+  // Workbook border pattern for C4:V23: thick outer boundary and dotted
+  // internal grid lines, matching the supplied spreadsheet.
   const borderRows = {
-    left: [
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "t...................",
-      "t...................",
-      "t...................",
-      "t...................",
-      "t...................",
-      "t...................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "...................."
-    ],
-    right: [
-      ".............tdddddt",
-      "tddddddddddddddddddt",
-      "tddddddddddddddddddt",
-      "tddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      "dddddddddddddddddddt",
-      ".tddddddddddddddddt.",
-      ".tddddddddddddddddt.",
-      ".tddddddddddddddddt.",
-      ".tddddddddddddddddt.",
-      ".tddddddddddddddddt.",
-      ".tddddddddddddddddt.",
-      ".tdddddddddddddt....",
-      ".tdddddddddddddt....",
-      ".tdddddddddddddt....",
-      ".tdddddddddddddt...."
-    ],
-    top: [
-      "..............tttttt",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "....................",
-      "...................."
-    ],
-    bottom: [
-      ".tttttttttttttdddddd",
-      ".ddddddddddddddddddd",
-      ".ddddddddddddddddddd",
-      "tddddddddddddddddddd",
-      "dddddddddddddddddddd",
-      "dddddddddddddddddddd",
-      "dddddddddddddddddddd",
-      "dddddddddddddddddddd",
-      "dddddddddddddddddddd",
-      "ttdddddddddddddddddt",
-      "..ddddddddddddddddd.",
-      "..ddddddddddddddddd.",
-      "..ddddddddddddddddd.",
-      "..ddddddddddddddddd.",
-      "..ddddddddddddddddd.",
-      "..ddddddddddddddttt.",
-      "..dddddddddddddd....",
-      "..dddddddddddddd....",
-      "..dddddddddddddd....",
-      "..tttttttttttttt...."
-    ]
+    left: Array.from({length:20}, (_,r) => 't' + 'd'.repeat(19)),
+    right: Array.from({length:20}, (_,r) => 'd'.repeat(19) + 't'),
+    top: Array.from({length:20}, (_,r) => r === 0 ? 't'.repeat(20) : 'd'.repeat(20)),
+    bottom: Array.from({length:20}, (_,r) => r === 19 ? 't'.repeat(20) : 'd'.repeat(20))
   };
 
   function borderStyle(ch) {
@@ -455,6 +441,44 @@
   let dragLabel = null;
   let dragOffset = {x:0,y:0};
 
+  const roomDescriptions = {
+    "faucēs": "entrance",
+    "ātrium": "entrance hall where guests were received",
+    "tablīnum": "The study and where the owner met with guests",
+    "taberna": "shops located along the street",
+    "peristylum": "The peristyle which was a walkway surrounded by columns",
+    "trīclīnium": "dining room with three couches",
+    "hortus": "the garden that was surrounded by the peristyle",
+    "impluvium": "pool of water in the middle of the atrium with a hole in the roof above it to collect rainwater.",
+    "cubiculum": "bedrooms that were located along the atrium and the peristyle"
+  };
+  let hoverLabelIndex = -1;
+  let labelHoverTimer = null;
+  const labelTooltip = document.createElement("div");
+  labelTooltip.className = "label-tooltip";
+  document.body.appendChild(labelTooltip);
+
+  function showLabelTooltip(text, clientX, clientY){
+    if(!text || !roomDescriptions[text]){ labelTooltip.style.display="none"; return; }
+    labelTooltip.textContent = roomDescriptions[text];
+    labelTooltip.style.left = (clientX + 14) + "px";
+    labelTooltip.style.top = (clientY + 14) + "px";
+    labelTooltip.style.display = "block";
+  }
+  function hideLabelTooltip(){
+    if(labelHoverTimer){ clearTimeout(labelHoverTimer); labelHoverTimer=null; }
+    labelTooltip.style.display="none";
+    hoverLabelIndex=-1;
+  }
+  function scheduleLabelTooltip(text, clientX, clientY){
+    if(labelHoverTimer) clearTimeout(labelHoverTimer);
+    labelTooltip.style.display="none";
+    labelHoverTimer=setTimeout(()=>{
+      labelHoverTimer=null;
+      showLabelTooltip(text, clientX, clientY);
+    },1000);
+  }
+
   const toolText = {
     wall: "Drag from one grid line or thick boundary line to another. Walls snap to both.",
     column: "Click near a grid intersection to place a circular column.",
@@ -478,7 +502,7 @@
   };
 
   function snapshot() {
-    return JSON.stringify({version:17,walls,columns,waters,grasses,statues,fountains,counters,furnaces,cabinets,amphorae,lararia,couches,tables,beds,chairs,doors,marbles,labels});
+    return JSON.stringify({version:18,walls,columns,waters,grasses,statues,fountains,counters,furnaces,cabinets,amphorae,lararia,couches,tables,beds,chairs,doors,marbles,labels});
   }
   function pushHistory() {
     history.push(snapshot());
@@ -489,29 +513,14 @@
     const d = JSON.parse(s);
     walls = d.walls || [];
     columns = d.columns || [];
-    // Older saved files used a grid without the top 320px row. Shift cell-based
-    // furniture/decor down one row when loading those older files.
-    const legacyCellGrid = (d.version || 0) < 8;
-    const shiftY = legacyCellGrid ? 1 : 0;
+    // Normalize saved cell objects to the new 20 x 20 global grid.
+    // C4 is ix=0,iy=0 and V23 is ix=19,iy=19.
     const normalizeCell = o => {
       if(!o) return o;
-      // Convert both old local R4:W4 objects (ix 0..5, topRight=true) and
-      // newer/global objects into the single global grid coordinate system.
-      // Any iy=0 object with ix 0..5 is legacy R4:W4 local data.
-      // Convert it before Undo/Redo can restore it to E4:J4.
-      if(o.iy===0 && o.ix>=0 && o.ix<6 && o.topRight===true) {
-        return {...o, ix:o.ix+14, iy:0, topRight:false};
-      }
-      // Some intermediate builds lost the topRight flag. In row 4 those
-      // low ix values are not valid editable cells, so they are unambiguously
-      // legacy R4:W4 data.
-      if(o.iy===0 && o.ix>=0 && o.ix<6) {
-        return {...o, ix:o.ix+14, iy:0, topRight:false};
-      }
       if(o.special==="D8" || o.key==="D8") {
         return {...o,ix:0,iy:4,topRight:false};
       }
-      return {...o, iy:o.iy + shiftY, topRight:false};
+      return {...o, topRight:false};
     };
     const shiftCells = arr => (arr || []).map(normalizeCell);
     waters = shiftCells(d.waters);
@@ -579,18 +588,12 @@
     return {x:nearest(p.x,heavyX), y:nearest(p.y,heavyY)};
   }
   
-  // Canonical spreadsheet coordinates. D8 is the normal first-column cell
-  // (global ix 0) in row 8 (global iy 4). There is NO extra square to the
-  // left of D8. R4:W4 remains the special raised six-cell section.
+  // Canonical spreadsheet coordinates: C4 is (0,0) and V23 is (19,19).
+  // The supplied workbook is a complete 20 x 20 editable grid.
   function isD8Cell(o){ return !!o && o.special==="D8"; }
-  function isTopRightCell(o){ return !!(o && o.topRight===true && o.ix>=0 && o.ix<6 && o.iy===0); }
 
   function cellRect(o) {
-    // Compatibility for old files that stored D8 as a separate special cell.
     if(isD8Cell(o)) return {x:xLines[0],y:yLines[4],w:CELL,h:CELL};
-    if(isTopRightCell(o)){
-      return {x:xLines[o.ix+14],y:Y0,w:CELL,h:CELL};
-    }
     return {x:xLines[o.ix],y:yLines[o.iy],
             w:xLines[o.ix+1]-xLines[o.ix],
             h:yLines[o.iy+1]-yLines[o.iy]};
@@ -602,13 +605,7 @@
   function sameCell(a,b){ return !!a && !!b && cellKey(a)===cellKey(b); }
 
   function isEditableMain(ix, iy){
-    if(ix<0 || ix>=20 || iy<0 || iy>=20) return false;
-    if(iy===0) return ix>=14 && ix<=19;        // R4:W4
-    if(iy>=1 && iy<=3) return ix>=1 && ix<=19; // E5:W7
-    if(iy>=4 && iy<=9) return ix>=0 && ix<=19; // D8:W13
-    if(iy>=10 && iy<=15) return ix>=1 && ix<=18; // E14:V19
-    if(iy>=16 && iy<=19) return ix>=1 && ix<=15; // E20:S23
-    return false;
+    return ix>=0 && ix<20 && iy>=0 && iy<20;
   }
 
   function cellAt(p) {
@@ -624,8 +621,7 @@
     ctx.fillStyle = "#fbf8f0";
     ctx.fillRect(0,0,W,H);
 
-    // Render the workbook's actual border sides cell-by-cell. This avoids
-    // guessing where a thick boundary belongs and preserves the stepped shape.
+    // Render the workbook's actual border sides cell-by-cell.
     for(let r=0;r<20;r++) {
       for(let c=0;c<20;c++) {
         const x=xLines[c], y=yLines[r], w=CELL, h=CELL;
@@ -1323,9 +1319,7 @@
     const cells = o.dir === "h"
       ? [{ix:o.ix,iy:o.iy},{ix:o.ix+1,iy:o.iy}]
       : [{ix:o.ix,iy:o.iy},{ix:o.ix,iy:o.iy+1}];
-    // A two-square object must occupy two actual floor squares. D8 is not
-    // allowed as a furniture start because the adjacent square is outside
-    // the stepped edge.
+    // A two-square object must occupy two actual floor squares.
     return cells.every(q => isEditableMain(q.ix,q.iy));
   }
 
@@ -1826,6 +1820,7 @@ canvas.addEventListener("pointerdown", e => {
     } else if(tool==="select"){
       const i=labelHit(p);
       if(i>=0){
+        hideLabelTooltip();
         dragLabel=i;
         dragOffset={x:p.x-labels[i].x,y:p.y-labels[i].y};
         pushHistory();
@@ -1876,6 +1871,19 @@ canvas.addEventListener("pointerdown", e => {
   });
 
   canvas.addEventListener("pointermove", e => {
+    const hoverPoint = pos(e);
+    const hovered = labelHit(hoverPoint);
+    // Do not show room descriptions while a placed label is being dragged.
+    if(dragLabel!==null){
+      hideLabelTooltip();
+    } else if(hovered >= 0){
+      if(hoverLabelIndex !== hovered){
+        hoverLabelIndex = hovered;
+        scheduleLabelTooltip(labels[hovered].text, e.clientX, e.clientY);
+      }
+    } else {
+      hideLabelTooltip();
+    }
     if(tileDragging){
       paintTileCell(cellAt(pos(e)));
       draw();
@@ -1941,8 +1949,14 @@ canvas.addEventListener("pointerdown", e => {
     } else if(tool==="select" && dragLabel!==null){
       labels[dragLabel].x=p.x-dragOffset.x;
       labels[dragLabel].y=p.y-dragOffset.y;
+      // Tooltip intentionally remains hidden while the label is being moved.
+      hideLabelTooltip();
       draw();
     }
+  });
+
+  canvas.addEventListener("pointerleave", () => {
+    if(dragLabel===null) hideLabelTooltip();
   });
 
   canvas.addEventListener("pointerup", e => {
@@ -2036,9 +2050,25 @@ canvas.addEventListener("pointerdown", e => {
     if(i>=0){pushHistory();labels.splice(i,1);draw();status.innerHTML="<b>Label removed.</b>";}
   });
 
-  // Drag labels from the tray onto the plan.
+  // Room-label hover descriptions: wait one second before showing.
+  // The same behavior is used in the tray and on placed labels.
   document.querySelectorAll(".label").forEach(el => {
+    el.removeAttribute("title");
+    el.addEventListener("mouseenter", e => {
+      scheduleLabelTooltip(el.dataset.label, e.clientX, e.clientY);
+    });
+    el.addEventListener("mousemove", e => {
+      if(labelHoverTimer) {
+        clearTimeout(labelHoverTimer);
+        labelHoverTimer=setTimeout(()=>{
+          labelHoverTimer=null;
+          showLabelTooltip(el.dataset.label, e.clientX, e.clientY);
+        },1000);
+      }
+    });
+    el.addEventListener("mouseleave", hideLabelTooltip);
     el.addEventListener("dragstart", e => {
+      hideLabelTooltip();
       e.dataTransfer.setData("text/plain",el.dataset.label);
       e.dataTransfer.effectAllowed="copy";
     });
@@ -2088,7 +2118,7 @@ document.getElementById("undoBtn").addEventListener("click",()=>{
     status.innerHTML="<b>Plan reset.</b> Start a new design.";
   });
   document.getElementById("saveBtn").addEventListener("click",()=>{
-    const data=JSON.stringify({version:17,walls,columns,waters,grasses,statues,fountains,counters,furnaces,cabinets,amphorae,lararia,couches,tables,beds,chairs,doors,marbles,labels},null,2);
+    const data=JSON.stringify({version:18,walls,columns,waters,grasses,statues,fountains,counters,furnaces,cabinets,amphorae,lararia,couches,tables,beds,chairs,doors,marbles,labels},null,2);
     const blob=new Blob([data],{type:"application/json"});
     const a=document.createElement("a");
     a.href=URL.createObjectURL(blob);
