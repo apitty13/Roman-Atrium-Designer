@@ -259,6 +259,245 @@
   }
 #plan{touch-action:none;user-select:none;cursor:crosshair;}
 </style>
+
+<style id="compact-layout-overrides">
+  /* Compact overall layout without changing the left tool-panel width. */
+  body { margin: 0; }
+  header { padding: 10px 16px !important; }
+  header h1 { margin: 0 0 4px !important; }
+  header p { margin: 0 !important; }
+  main { gap: 12px !important; padding: 10px 12px !important; }
+  .panel { padding: 10px !important; margin-bottom: 8px !important; }
+  .panel h2 { margin: 0 0 7px !important; }
+  .panel p { margin: 5px 0 !important; }
+  .small { margin: 4px 0 !important; }
+  .tool-grid { gap: 5px !important; }
+  button { padding: 7px 9px !important; }
+  .marble-grid { gap: 5px !important; }
+  .marble-choice { padding: 5px !important; }
+  .status { margin-top: 6px !important; padding: 7px !important; }
+  .checklist { margin-top: 6px !important; }
+  .checklist li { margin: 2px 0 !important; }
+  .canvas-wrap { margin: 0 !important; padding: 0 !important; }
+  canvas { display: block; }
+  footer { padding: 6px 12px !important; margin: 0 !important; }
+</style>
+
+
+<style id="tight-grid-area">
+  /* The 20x20 grid remains 62px per cell internally.
+     Only the unused canvas area around it has been cropped. */
+  .workspace {
+    width: min(100%, 794px) !important;
+    margin: 0 !important;
+  }
+
+  .canvas-wrap {
+    width: 794px !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  #plan {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  main {
+    align-items: start !important;
+    gap: 8px !important;
+    padding: 4px 8px !important;
+  }
+</style>
+
+
+<style id="final-compact-layout">
+  /* Give the unchanged tool area more horizontal room; do not make it narrower. */
+  .app {
+    grid-template-columns: 360px minmax(0, 1fr) !important;
+    min-height: calc(100vh - 75px) !important;
+  }
+
+  aside {
+    padding: 10px !important;
+  }
+
+  .panel {
+    padding: 11px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .sidebar-scroll {
+    max-height: calc(100vh - 105px) !important;
+    padding-right: 3px !important;
+  }
+
+  .tools {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+  }
+
+  .tools button {
+    padding: 9px 10px !important;
+  }
+
+  /* Smaller checklist, with the two requested requirements removed. */
+  .assignment-checklist {
+    max-width: 1280px !important;
+    margin: 4px auto 0 !important;
+    padding: 5px 14px 6px !important;
+  }
+
+  .assignment-checklist h2 {
+    margin: 0 0 2px !important;
+    font-size: 14px !important;
+  }
+
+  .assignment-checklist .intro {
+    margin: 0 0 3px !important;
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+  }
+
+  .label-checks {
+    gap: 3px 10px !important;
+    margin: 2px 0 3px 18px !important;
+  }
+
+  .checklist {
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    gap: 2px !important;
+  }
+
+  .check-item {
+    gap: 5px !important;
+  }
+
+  /* Restore the full-size visual design grid. The canvas is cropped around
+     the actual 20x20 grid, so there is no large blank canvas around it. */
+  main {
+    padding: 4px 8px !important;
+    overflow: auto !important;
+  }
+
+  .workspace {
+    width: min(1240px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+    margin: 0 !important;
+  }
+
+  .canvas-wrap {
+    width: min(1240px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+    margin: 0 !important;
+  }
+
+  #plan {
+    width: min(1240px, calc(100vw - 390px)) !important;
+    height: auto !important;
+  }
+</style>
+
+
+<style id="right-sized-grid">
+  /* Smaller visible design area; internal grid coordinates remain unchanged. */
+  .workspace {
+    width: min(920px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+  }
+
+  .canvas-wrap {
+    width: min(920px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+  }
+
+  #plan {
+    width: min(920px, calc(100vw - 390px)) !important;
+    height: auto !important;
+    display: block;
+  }
+</style>
+
+
+<style id="slightly-smaller-grid">
+  .workspace {
+    width: min(870px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+  }
+  .canvas-wrap {
+    width: min(870px, calc(100vw - 390px)) !important;
+    max-width: calc(100vw - 390px) !important;
+  }
+  #plan {
+    width: min(870px, calc(100vw - 390px)) !important;
+    height: auto !important;
+  }
+</style>
+
+
+<style id="student-view-grid">
+  /* Fit the complete design grid on a typical student laptop screen.
+     The internal 20x20 / 62px grid is unchanged; only its displayed size changes. */
+  .workspace {
+    width: min(760px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(760px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  .canvas-wrap {
+    width: min(760px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(760px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  #plan {
+    width: min(760px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    height: auto !important;
+    display: block;
+  }
+
+  main {
+    overflow: hidden !important;
+  }
+</style>
+
+
+<style id="wider-student-grid">
+  /* Allow more horizontal width while still fitting the full grid vertically. */
+  .workspace {
+    width: min(850px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(850px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  .canvas-wrap {
+    width: min(850px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(850px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  #plan {
+    width: min(850px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    height: auto !important;
+  }
+</style>
+
+
+<style id="slightly-bigger-student-grid">
+  /* Slightly larger than 850px, while retaining the screen-height fit. */
+  .workspace {
+    width: min(900px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(900px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  .canvas-wrap {
+    width: min(900px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    max-width: min(900px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+  }
+
+  #plan {
+    width: min(900px, calc(100vw - 390px), calc(100vh - 255px)) !important;
+    height: auto !important;
+  }
+</style>
+
 </head>
 <body>
 <header>
@@ -278,9 +517,9 @@
       <label class="label-check"><input type="checkbox"><span>tablīnum</span></label>
     </div>
     <ul class="checklist">
-      <li><label class="check-item"><input type="checkbox"><span class="check-text">For the triclinium, Roman Atrium-Style houses had one that opened along the peristyle. Make sure at least one is present on the peristyle.</span></label></li>
+      
       <li><label class="check-item"><input type="checkbox"><span class="check-text">A Roman entering through the fauces should be able to see from the entrance through the atrium, tablinum, and to the peristyle. The view should not be blocked by any walls, but columns are fine.</span></label></li>
-      <li><label class="check-item"><input type="checkbox"><span class="check-text">Make sure the rooms are in scale with one another. Cubicula and tabernae should be small, and the atrium and peristyle large. Make sure to use all the space available.</span></label></li>
+      
     </ul>
   </div>
 </header>
@@ -358,7 +597,7 @@
   <main>
     <div class="workspace">
       <div class="canvas-wrap">
-        <canvas id="plan" width="1582" height="2048" aria-label="Roman house plan"></canvas>
+        <canvas id="plan" width="1280" height="1280" aria-label="Roman house plan"></canvas>
       </div>
       <div class="status" id="status">
         <b>Tip:</b> Start by drawing walls on the existing grid. Use the Fountain tool to add a one-square Roman fountain, or the Amphora tool to add storage jars; water fills the square you click, and columns snap to nearby grid intersections.
@@ -379,8 +618,8 @@
   // The workbook uses a complete 20 x 20 grid: C4:V23.
   // Every cell is editable and all cells are rendered as true squares.
   const CELL = 62;
-  const X0 = 185; // left edge of column D
-  const Y0 = 258; // top edge of row 4
+  const X0 = 20; // small margin around the 20x20 design grid
+  const Y0 = 20; // small margin around the 20x20 design grid
   const xLines = Array.from({length:21}, (_,i)=>X0+i*CELL); // D:X boundaries
   const yLines = Array.from({length:21}, (_,i)=>Y0+i*CELL); // 4:24 boundaries
 
@@ -511,18 +750,36 @@
   }
   function restore(s) {
     const d = JSON.parse(s);
-    walls = d.walls || [];
-    columns = d.columns || [];
-    // Normalize saved cell objects to the new 20 x 20 global grid.
-    // C4 is ix=0,iy=0 and V23 is ix=19,iy=19.
+    if(!d || typeof d !== "object") throw new Error("Invalid design file");
+    walls = Array.isArray(d.walls) ? d.walls : [];
+    columns = Array.isArray(d.columns) ? d.columns : [];
+
+    // Backward-compatible loader for designs saved by earlier versions.
+    // Older builds used a local R4:W4 strip and, before version 8, the grid
+    // did not include the current top row. Convert those coordinates into
+    // the current 20 x 20 global grid before drawing.
+    const legacyCellGrid = (d.version || 0) < 8;
+    const shiftY = legacyCellGrid ? 1 : 0;
     const normalizeCell = o => {
-      if(!o) return o;
-      if(o.special==="D8" || o.key==="D8") {
-        return {...o,ix:0,iy:4,topRight:false};
+      if(!o || typeof o !== "object") return o;
+
+      // Legacy/intermediate builds stored the old R4:W4 area as ix 0..5.
+      // Those cells belong at the right side of the current global row.
+      if(o.iy===0 && o.ix>=0 && o.ix<6 && o.topRight===true) {
+        return {...o, ix:o.ix+14, iy:0, topRight:false};
       }
-      return {...o, topRight:false};
+      if(o.iy===0 && o.ix>=0 && o.ix<6) {
+        return {...o, ix:o.ix+14, iy:0, topRight:false};
+      }
+
+      // Preserve the special D8 correction used by intermediate builds.
+      if(o.special==="D8" || o.key==="D8") {
+        return {...o, ix:0, iy:4, topRight:false};
+      }
+
+      return {...o, iy:(Number.isFinite(o.iy) ? o.iy : 0) + shiftY, topRight:false};
     };
-    const shiftCells = arr => (arr || []).map(normalizeCell);
+    const shiftCells = arr => Array.isArray(arr) ? arr.map(normalizeCell).filter(Boolean) : [];
     waters = shiftCells(d.waters);
     grasses = shiftCells(d.grasses);
     statues = shiftCells(d.statues);
@@ -2158,7 +2415,7 @@ document.getElementById("undoBtn").addEventListener("click",()=>{
   document.getElementById("fileInput").addEventListener("change",e=>{
     const f=e.target.files[0]; if(!f)return;
     const r=new FileReader();
-    r.onload=()=>{try{pushHistory();restore(r.result);status.innerHTML="<b>Design loaded.</b>";}catch(err){alert("That file could not be loaded.");}};
+    r.onload=()=>{try{pushHistory();restore(r.result);status.innerHTML="<b>Design loaded.</b>";}catch(err){console.error("Design load error:",err);alert("That file could not be loaded. The file may be from an incompatible format. Error: " + (err && err.message ? err.message : err));}};
     r.readAsText(f);
     e.target.value="";
   });
