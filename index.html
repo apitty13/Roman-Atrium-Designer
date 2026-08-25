@@ -1219,15 +1219,13 @@
       const margin=Math.min(c.w,c.h)*0.10;
       const x=c.x+margin, y=c.y+margin, w=c.w-margin*2, h=c.h-margin*2;
 
-      // Hide shared borders with neighboring table squares.
-      const left = isTopRightCell(t)
-        ? t.ix>0 && tableSet.has(`tr:${t.ix-1}`)
-        : tableSet.has(`${t.ix-1},${t.iy}`);
-      const right = isTopRightCell(t)
-        ? t.ix<5 && tableSet.has(`tr:${t.ix+1}`)
-        : tableSet.has(`${t.ix+1},${t.iy}`);
-      const up = isTopRightCell(t) ? false : tableSet.has(`${t.ix},${t.iy-1}`);
-      const down = isTopRightCell(t) ? false : tableSet.has(`${t.ix},${t.iy+1}`);
+      // Tables use the normal 20x20 cell coordinates.
+      // Older versions had a special "top-right" cell mode; that mode is no
+      // longer used on this grid, so table rendering must only use ix/iy.
+      const left = tableSet.has(`${t.ix-1},${t.iy}`);
+      const right = tableSet.has(`${t.ix+1},${t.iy}`);
+      const up = tableSet.has(`${t.ix},${t.iy-1}`);
+      const down = tableSet.has(`${t.ix},${t.iy+1}`);
 
       const x0 = left ? c.x : x;
       const y0 = up ? c.y : y;
