@@ -498,6 +498,116 @@
   }
 </style>
 
+
+<style id="fixed-800px-test">
+  /* TEST VERSION: fixed 800px display. No responsive auto-sizing. */
+  .workspace {
+    width: 800px !important;
+    max-width: 800px !important;
+  }
+
+  .canvas-wrap {
+    width: 800px !important;
+    max-width: 800px !important;
+  }
+
+  #plan {
+    width: 800px !important;
+    height: 800px !important;
+    display: block;
+  }
+
+  main {
+    overflow: auto !important;
+  }
+</style>
+
+
+<style id="fixed-750px-test">
+  /* TEST VERSION: fixed 750px display. No responsive auto-sizing. */
+  .workspace {
+    width: 750px !important;
+    max-width: 750px !important;
+  }
+
+  .canvas-wrap {
+    width: 750px !important;
+    max-width: 750px !important;
+  }
+
+  #plan {
+    width: 750px !important;
+    height: 750px !important;
+    display: block;
+  }
+</style>
+
+
+<style id="use-right-space">
+  main {
+    overflow: hidden !important;
+  }
+
+  .workspace {
+    width: min(100%, 1100px) !important;
+    max-width: 1100px !important;
+    margin: 0 !important;
+    display: grid !important;
+    grid-template-columns: 750px minmax(220px, 1fr) !important;
+    column-gap: 16px !important;
+    align-items: start !important;
+  }
+
+  .canvas-wrap {
+    width: 750px !important;
+    max-width: 750px !important;
+    margin: 0 !important;
+  }
+
+  #plan {
+    width: 750px !important;
+    height: 750px !important;
+    display: block;
+  }
+
+  .status {
+    margin-top: 0 !important;
+    align-self: start !important;
+    min-height: 150px;
+    padding: 12px !important;
+  }
+
+  @media (max-width: 1050px) {
+    .workspace {
+      grid-template-columns: 750px !important;
+    }
+    .status {
+      display: none;
+    }
+  }
+</style>
+
+
+<style id="fixed-700px-test">
+  /* TEST VERSION: fixed 700px display. */
+  .workspace {
+    width: min(100%, 1100px) !important;
+    max-width: 1100px !important;
+    grid-template-columns: 700px minmax(220px, 1fr) !important;
+  }
+
+  .canvas-wrap {
+    width: 700px !important;
+    max-width: 700px !important;
+  }
+
+  #plan {
+    width: 700px !important;
+    height: 700px !important;
+    display: block;
+  }
+</style>
+
 </head>
 <body>
 <header>
