@@ -873,18 +873,24 @@
     const normalizeCell = o => {
       if(!o || typeof o !== "object") return o;
 
-      // Legacy/intermediate builds stored the old R4:W4 area as ix 0..5.
-      // Those cells belong at the right side of the current global row.
-      if(o.iy===0 && o.ix>=0 && o.ix<6 && o.topRight===true) {
-        return {...o, ix:o.ix+14, iy:0, topRight:false};
-      }
-      if(o.iy===0 && o.ix>=0 && o.ix<6) {
-        return {...o, ix:o.ix+14, iy:0, topRight:false};
-      }
+      // These coordinate conversions were needed by older/intermediate files,
+      // but must NOT run on the current version-18 history snapshots.
+      // Otherwise current C4:H4 cells (ix 0..5, iy 0) are incorrectly moved
+      // to Q4:V4 every time Undo or Redo restores a snapshot.
+      if((d.version || 0) < 18) {
+        // Legacy/intermediate builds stored the old R4:W4 area as ix 0..5.
+        // Those cells belong at the right side of the current global row.
+        if(o.iy===0 && o.ix>=0 && o.ix<6 && o.topRight===true) {
+          return {...o, ix:o.ix+14, iy:0, topRight:false};
+        }
+        if(o.iy===0 && o.ix>=0 && o.ix<6) {
+          return {...o, ix:o.ix+14, iy:0, topRight:false};
+        }
 
-      // Preserve the special D8 correction used by intermediate builds.
-      if(o.special==="D8" || o.key==="D8") {
-        return {...o, ix:0, iy:4, topRight:false};
+        // Preserve the special D8 correction used by intermediate builds.
+        if(o.special==="D8" || o.key==="D8") {
+          return {...o, ix:0, iy:4, topRight:false};
+        }
       }
 
       return {...o, iy:(Number.isFinite(o.iy) ? o.iy : 0) + shiftY, topRight:false};
